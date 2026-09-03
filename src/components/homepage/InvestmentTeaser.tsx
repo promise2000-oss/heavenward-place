@@ -20,33 +20,42 @@ export default function InvestmentTeaser() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] orb orb-teal opacity-20" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] orb orb-gold opacity-15" />
       <div className="absolute inset-0 dot-pattern opacity-[0.03]" />
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-teal/50 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-secondary/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={fadeInUp}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 glass-dark rounded-full text-sm font-medium text-neon-teal mb-8">
+            <span className="inline-flex items-center gap-2 px-4 py-2 glass-dark rounded-full text-sm font-medium text-secondary mb-8">
               <Sparkles size={14} />
               Investment Opportunity
             </span>
             <h2 className="text-3xl lg:text-5xl font-display font-semibold text-white leading-tight tracking-tight">
-              Own a piece of Africa&apos;s <span className="bg-gradient-to-r from-secondary-light to-accent bg-clip-text text-transparent">booming short-let market</span>
+              Own a piece of Africa&apos;s <span className="bg-gradient-to-r from-secondary-light to-secondary bg-clip-text text-transparent">booming short-let market</span>
             </h2>
             <p className="mt-6 text-lg text-white/80 leading-relaxed max-w-lg">
               Earn premium returns while owning real property. Our fractional ownership model lets you invest in luxury short-let apartments across Lagos, with projected yields of 25%+ annually.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/investment"><Button variant="secondary" size="lg" icon={<TrendingUp size={18} />}>Learn about investing</Button></Link>
-              <Link href="/investment"><Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white hover:text-primary-dark">View returns</Button></Link>
+              <Link href="/investment">
+                <Button variant="secondary" size="lg" icon={<TrendingUp size={18} />}>
+                  Learn about investing
+                </Button>
+              </Link>
+              <Link href="/investment">
+                <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white hover:text-primary-dark">
+                  View returns
+                </Button>
+              </Link>
             </div>
           </motion.div>
-          <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-4">
+          
+          <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-5">
             {stats.map((stat) => (
-              <div key={stat.label} className="glass-dark p-6 rounded-2xl glow-on-hover group">
-                <stat.icon size={24} className="text-neon-teal mb-3 group-hover:scale-110 transition-transform duration-300" />
-                <p className="text-2xl font-bold font-display text-white">{stat.value}</p>
-                <p className="text-sm font-medium text-white/90 mt-1">{stat.label}</p>
-                <p className="text-xs text-white/70 mt-0.5">{stat.description}</p>
+              <div key={stat.label} className="glass-dark p-7 rounded-2xl glow-on-hover group">
+                <stat.icon size={28} className="text-secondary mb-4 group-hover:scale-110 transition-transform duration-300" />
+                <p className="text-3xl font-bold font-display text-white">{stat.value}</p>
+                <p className="text-sm font-semibold text-white/90 mt-2">{stat.label}</p>
+                <p className="text-xs text-white/60 mt-1">{stat.description}</p>
               </div>
             ))}
           </motion.div>

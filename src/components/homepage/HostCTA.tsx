@@ -19,7 +19,7 @@ export default function HostCTA() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={fadeInUp}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-8">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-primary/10 rounded-full text-sm font-medium text-primary mb-8">
               <Sparkles size={14} className="text-secondary" />
               For Property Owners
             </span>
@@ -30,19 +30,28 @@ export default function HostCTA() {
               Join hundreds of property owners who are earning premium income through Heavenward. We handle marketing, bookings, and guest support so you can focus on what matters.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/host"><Button size="lg" icon={<ArrowRight size={18} />} iconPosition="right">Start hosting</Button></Link>
-              <Link href="/propose-destination"><Button variant="outline" size="lg">Propose a destination</Button></Link>
+              <Link href="/host">
+                <Button size="lg" icon={<ArrowRight size={18} />} iconPosition="right">
+                  Start hosting
+                </Button>
+              </Link>
+              <Link href="/propose-destination">
+                <Button variant="outline" size="lg">
+                  Propose a destination
+                </Button>
+              </Link>
             </div>
           </motion.div>
-          <motion.div variants={fadeInUp} className="grid grid-cols-1 gap-4">
+          
+          <motion.div variants={fadeInUp} className="grid grid-cols-1 gap-5">
             {benefits.map((benefit) => (
-              <div key={benefit.title} className="flex items-start gap-5 p-6 glass-card rounded-2xl glow-on-hover group">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary to-neon-teal/60 rounded-xl flex items-center justify-center shrink-0 shadow-glow group-hover:shadow-glow-lg transition-shadow duration-400">
-                  <benefit.icon size={24} className="text-white" />
+              <div key={benefit.title} className="flex items-start gap-6 p-7 bg-white rounded-2xl shadow-sm border border-border/60 glow-on-hover group">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shrink-0 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                  <benefit.icon size={28} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-ink">{benefit.title}</h3>
-                  <p className="mt-1.5 text-sm text-charcoal leading-relaxed">{benefit.description}</p>
+                  <h3 className="text-xl font-semibold text-ink group-hover:text-primary transition-colors duration-300">{benefit.title}</h3>
+                  <p className="mt-2 text-sm text-charcoal leading-relaxed">{benefit.description}</p>
                 </div>
               </div>
             ))}
