@@ -347,7 +347,7 @@ export const properties: Property[] = [
         alt: 'En-suite master bathroom with freestanding bath',
       },
       {
-        url: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=1400&q=80',
+        url: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1400&q=80',
         alt: 'Modern kitchen in an executive penthouse',
       },
     ],

@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  Children,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import {
   motion,
   useInView,
@@ -8,7 +16,6 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  type Variants,
 } from 'framer-motion';
 
 /**
@@ -27,26 +34,6 @@ export const DURATION = {
   base: 0.6,
   slow: 0.8,
 } as const;
-
-export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: DURATION.base, ease: EASE } },
-};
-
-export const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: DURATION.slow, ease: EASE } },
-};
-
-export const slideInRight: Variants = {
-  hidden: { opacity: 0, x: 32 },
-  visible: { opacity: 1, x: 0, transition: { duration: DURATION.base, ease: EASE } },
-};
-
-export const staggerParent = (stagger = 0.09, delayChildren = 0): Variants => ({
-  hidden: {},
-  visible: { transition: { staggerChildren: stagger, delayChildren } },
-});
 
 interface RevealProps {
   children: ReactNode;
@@ -95,21 +82,35 @@ interface StaggerProps {
   delay?: number;
 }
 
+/**
+ * Cascade timing handed to each item.
+ *
+ * The index travels through context rather than through framer-motion's
+ * variant propagation. Propagation never delivered the `visible` label down to
+ * the children, so every staggered card on the site stayed at `opacity: 0`
+ * with its image and copy already sitting in the DOM — rendered, but never
+ * shown. Each item now decides for itself when to appear.
+ */
+const StaggerContext = createContext({ index: 0, stagger: 0.09, delay: 0 });
+
 /** Staggered card entrances. Children should be <Stagger.Item>. */
 export function Stagger({ children, className = '', stagger = 0.09, delay = 0 }: StaggerProps) {
   const reduce = useReducedMotion();
+
   if (reduce) return <div className={className}>{children}</div>;
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-10% 0px' }}
-      variants={staggerParent(stagger, delay)}
-    >
-      {children}
-    </motion.div>
-  );
+
+  const items = Children.map(children, (child, i) => (
+    <StaggerContext.Provider value={{ index: i, stagger, delay }}>
+      {child}
+    </StaggerContext.Provider>
+  ));
+
+  /*
+   * The container observes nothing itself — it is only the grid. Scroll
+   * detection lives in each item, so one item never has to wake up its
+   * siblings through a mechanism that was silently dropping the signal.
+   */
+  return <div className={className}>{items}</div>;
 }
 
 export function StaggerItem({
@@ -122,12 +123,57 @@ export function StaggerItem({
   y?: number;
 }) {
   const reduce = useReducedMotion();
+  const { index, stagger, delay } = useContext(StaggerContext);
+  const ref = useRef<HTMLDivElement>(null);
+  const [seen, setSeen] = useState(false);
+
+  useEffect(() => {
+    if (reduce) return;
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    /*
+     * A plain IntersectionObserver rather than framer's scroll hooks.
+     *
+     * `whileInView` and `useInView` were both reporting for these grids, yet
+     * the element never left `opacity: 0`. Observing it directly is the one
+     * mechanism verified to fire here, and disconnecting after the first hit
+     * keeps the reveal-once behaviour of `once: true`.
+     */
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '-10% 0px', threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduce]);
+
   if (reduce) return <div className={className}>{children}</div>;
+
   return (
-    <motion.div className={className} variants={fadeUp} initial="hidden" style={{ willChange: 'transform' }}>
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y }}
+      animate={seen ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ duration: DURATION.base, ease: EASE, delay: delay + index * stagger }}
+      style={{ willChange: 'transform' }}
+    >
+      {/*
+       * Hover lift only — deliberately carries no `initial` of its own.
+       *
+       * It previously started at `opacity: 0` while declaring neither an
+       * `animate` nor a `variants` to come back from it, so this element
+       * stayed transparent forever. The card's photograph and every line of
+       * copy sat behind it, fully rendered but never visible.
+       */}
       <motion.div
-        initial={{ opacity: 0, y }}
-        whileHover={{ y: y - 6 }}
+        whileHover={{ y: -6 }}
         transition={{ duration: DURATION.fast, ease: EASE }}
         className="h-full"
       >

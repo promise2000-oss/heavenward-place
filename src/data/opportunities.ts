@@ -310,7 +310,7 @@ export const opportunities: Opportunity[] = [
     status: 'PUBLISHED',
     documentsPubliclyDownloadable: false,
     imageUrl:
-      'https://images.unsplash.com/photo-1601598851547-4302969d7bbb?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1200&q=80',
     sortOrder: 1,
   },
   {

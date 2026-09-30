@@ -92,7 +92,7 @@ export default async function StayPage({
         eyebrow="Stay With Us"
         title="Premium residences, priced in public."
         intro="Search our serviced apartments and villas across Lagos. Availability is live, rates are published, and a stay of seven nights or more automatically includes airport pickup and private-chef meals."
-        image="https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=2200&q=80"
+        image="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=2200&q=80"
         breadcrumbs={[{ name: 'Home', url: '/' }, { name: 'Stay With Us', url: '/stay' }]}
       />
 

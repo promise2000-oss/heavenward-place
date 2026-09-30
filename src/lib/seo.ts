@@ -30,7 +30,20 @@ export function buildMetadata(options: {
   const url = absoluteUrl(path);
 
   return {
-    title: fullTitle,
+    /*
+     * `fullTitle` always carries the branded form: it is what Open Graph,
+     * Twitter and image alt text render, none of which run through the root
+     * layout's `title.template`.
+     *
+     * The `title` field must NOT carry that brand too — the layout already
+     * appends it (`%s | Heavenward Place`) for every nested route, which is
+     * how pages were ending up as "Insights | Heavenward Place | Heavenward
+     * Place". A bare segment name is passed through for that template to
+     * consume. The home page is the one exception: it has no segment name of
+     * its own, so it renders `fullTitle` directly, exactly as the layout's
+     * `title.default` spells it.
+     */
+    title: title ?? fullTitle,
     description,
     keywords,
     alternates: { canonical: url },
