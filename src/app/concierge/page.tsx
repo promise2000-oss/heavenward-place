@@ -104,6 +104,7 @@ export default function ConciergePage() {
         <Container>
           <SectionHeading
             eyebrow="What We Offer"
+            rule
             title="Six services, one request form"
             intro="Every service is available on request. Complimentary entitlements are applied automatically at the point of booking — you never have to ask for what you are already owed."
           />
@@ -144,9 +145,10 @@ export default function ConciergePage() {
       {/* Request form */}
       <Section tone="white">
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 xl:col-span-4">
             <SectionHeading
               eyebrow="Make a Request"
+              display
               title="Tell us what you need"
               intro="If you already have a booking reference, include it so we can attach the request to your stay. If you are still deciding, submit anyway — we will help with the whole arrangement."
             />
@@ -190,6 +192,7 @@ export default function ConciergePage() {
           <SectionHeading
             tone="light"
             eyebrow="How It Works"
+            lead
             title="Three steps, no back-and-forth"
             align="center"
           />

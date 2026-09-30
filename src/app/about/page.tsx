@@ -81,7 +81,7 @@ export default function AboutPage() {
       <Section tone="white">
         <Container className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <SectionHeading eyebrow="Who We Are" title="Two connected offerings, one standard" />
+            <SectionHeading lead eyebrow="Who We Are" title="Two connected offerings, one standard" />
             <div className="mt-8 flex flex-col gap-6 text-[1rem] leading-relaxed text-slate-700">
               <p>
                 We are a hospitality business first. Everything about how we operate — the
@@ -149,6 +149,7 @@ export default function AboutPage() {
           <SectionHeading
             tone="light"
             eyebrow="Brand Philosophy"
+            rule
             title="Five words that decide how we work"
             intro="These are not decoration. They are the criteria we apply when we choose a residence, write a message, or handle a difficult request."
           />
@@ -179,6 +180,7 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="What We Do"
               title="Hospitality services"
+              display
               intro="Our primary offering: secure, comfortable and premium shortlet accommodation, purpose-built for corporate clients, business travellers, expatriates and individuals."
             />
             <Stagger className="mt-10 flex flex-col gap-5" stagger={0.08}>
@@ -231,6 +233,7 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="What We Do"
               title="Business services"
+              display
               intro="Alongside hospitality, we provide advisory support to businesses and investors. These are professional services — they are separate from, and not offered as, investment categories."
             />
             <Stagger className="mt-10 flex flex-col gap-5" stagger={0.08}>
@@ -331,6 +334,7 @@ export default function AboutPage() {
           <div className="lg:col-span-5">
             <SectionHeading
               eyebrow="Who We Serve"
+              rule
               title="Six audiences, one standard of service"
               intro="We are built for guests whose time is expensive and whose trust is not."
             />
@@ -359,6 +363,7 @@ export default function AboutPage() {
           <SectionHeading
             tone="light"
             eyebrow="Trust & Professionalism"
+            lead
             title="Where trust is enforced, not promised"
             align="center"
           />

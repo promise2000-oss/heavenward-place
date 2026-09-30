@@ -322,6 +322,7 @@ export default async function PropertyPage({
             <div>
               <SectionHeading
                 eyebrow="Optional"
+                rule
                 title="Paid add-ons"
                 intro="Priced at the published rate and shown in your price review before you pay. Nothing is added after payment."
               />

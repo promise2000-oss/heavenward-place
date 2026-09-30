@@ -158,10 +158,11 @@ export function OpportunityDetailCategoryView({
 
       <Section tone="white" id="interest">
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 xl:col-span-4">
             <SectionHeading
               eyebrow="Register Your Interest"
               title="Interested in this category?"
+              lead
               intro="One short form. A representative reviews your interest, capital range, geographic preference and area, and responds personally."
             />
           </div>
@@ -324,7 +325,7 @@ export function OpportunityDetailOpportunityView({
       {related.length > 0 ? (
         <Section tone="cream-soft">
           <Container>
-            <SectionHeading eyebrow="Also In This Category" title="Related opportunities" />
+            <SectionHeading display eyebrow="Also In This Category" title="Related opportunities" />
             <Stagger className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
               {related.map((r) => (
                 <StaggerItem key={r.slug}>
@@ -355,7 +356,7 @@ export function OpportunityDetailOpportunityView({
 
       <Section tone="white" id="interest">
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 xl:col-span-4">
             <SectionHeading
               eyebrow="Register Your Interest"
               title="Start the conversation"

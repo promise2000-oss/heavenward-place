@@ -126,6 +126,7 @@ export function OpportunityContent() {
         <Container>
           <SectionHeading
             eyebrow="Six Categories"
+            rule
             title="Where the opportunities sit"
             intro="Each category is presented with its short description, and every individual opportunity carries a mandatory key-consideration notice."
           />
@@ -201,6 +202,7 @@ export function OpportunityContent() {
         <Container>
           <SectionHeading
             eyebrow="Currently Presented"
+            display
             title="Selected opportunities"
             intro="High-level information only, and deliberately so. Nothing here is complete, independently verified by us, or investment, legal or tax advice."
           />

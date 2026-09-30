@@ -134,7 +134,7 @@ export function Section({
     <section
       id={id}
       aria-label={label}
-      className={`relative py-20 sm:py-24 lg:py-28 ${toneClass} ${className}`}
+      className={`relative py-16 sm:py-20 lg:py-24 ${toneClass} ${className}`}
     >
       {children}
     </section>
@@ -149,10 +149,37 @@ export function Rule({ className = '' }: { className?: string }) {
    SECTION HEADING
    ═════════════════════════════════════════════════════════════════════════════ */
 
-export function Eyebrow({ children, tone = 'dark' }: { children: ReactNode; tone?: 'dark' | 'light' }) {
+export function Eyebrow({
+  children,
+  tone = 'dark',
+  rule = false,
+}: {
+  children: ReactNode;
+  tone?: 'dark' | 'light';
+  /** Swap the leading em dash for a solid orange bar. */
+  rule?: boolean;
+}) {
+  const color = tone === 'light' ? 'text-[#FF9800]' : 'text-black';
+
+  if (rule) {
+    return (
+      <span className="flex items-center gap-3 sm:gap-4">
+        {/*
+          Narrower bar on small screens: with the label's 0.4em tracking, a
+          full-width bar plus gap would push long labels onto a second line.
+        */}
+        <span
+          className="h-[3px] w-9 shrink-0 bg-[#FF9800] sm:w-14"
+          aria-hidden="true"
+        />
+        <span className={`eyebrow ${color}`}>{children}</span>
+      </span>
+    );
+  }
+
   return (
-    <span className={`eyebrow ${tone === 'light' ? 'text-[#FF9800]' : 'text-black'}`}>
-      <span className={tone === 'light' ? 'text-[#FF9800]' : 'text-black'}>—</span> {children}
+    <span className={`eyebrow ${color}`}>
+      <span className={color}>—</span> {children}
     </span>
   );
 }
@@ -166,6 +193,9 @@ export function SectionHeading({
   maxWidth = 'max-w-3xl',
   className = '',
   action,
+  display = false,
+  lead = false,
+  rule = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -175,21 +205,52 @@ export function SectionHeading({
   maxWidth?: string;
   className?: string;
   action?: ReactNode;
+  /**
+   * Set the title in the brand display face. It renders uppercase with tight
+   * leading, so reserve it for titles of a few words — a sentence-length title
+   * in this treatment reads as shouting.
+   */
+  display?: boolean;
+  /** Step the title up a size, so section headings are not all equal. */
+  lead?: boolean;
+  /** Mark the eyebrow with a solid orange bar instead of an em dash. */
+  rule?: boolean;
 }) {
   const headingColor = tone === 'light' ? 'text-white' : 'text-black';
+
+  /*
+   * Three deliberate treatments instead of one heading repeated nine times per
+   * page: a display title, an oversized title, and the standard one. Sections
+   * alternate between them so the page has a rhythm rather than a template.
+   */
+  const titleClass = display
+    ? 'mt-5 text-[2.5rem] font-display sm:text-[3.2rem] lg:text-[4.1rem]'
+    : lead
+      ? 'mt-5 text-balance text-4xl font-extrabold leading-[1.03] sm:text-5xl lg:text-[3.5rem]'
+      : 'mt-5 text-balance text-3xl font-extrabold sm:text-4xl lg:text-[2.9rem]';
+
   return (
     <div
-      className={`${align === 'center' ? 'mx-auto text-center' : ''} ${maxWidth} ${className} ${
+      className={`${align === 'center' ? 'mx-auto text-center' : ''} ${
+        /* With an action the row runs the full container so the button lands on
+           the grid edge; without one the block keeps its measure. The text
+           always keeps its measure either way. */
+        action ? '' : maxWidth
+      } ${className} ${
         action ? 'flex flex-col gap-6 md:flex-row md:items-end md:justify-between' : ''
       }`}
     >
-      <div className={align === 'center' ? 'flex flex-col items-center' : ''}>
-        {eyebrow ? <Eyebrow tone={tone}>{eyebrow}</Eyebrow> : null}
-        <h2
-          className={`mt-5 text-balance text-3xl font-extrabold sm:text-4xl lg:text-[2.9rem] ${headingColor}`}
-        >
-          {title}
-        </h2>
+      <div
+        className={`${align === 'center' ? 'flex flex-col items-center' : ''} ${
+          action ? maxWidth : ''
+        }`}
+      >
+        {eyebrow ? (
+          <Eyebrow tone={tone} rule={rule}>
+            {eyebrow}
+          </Eyebrow>
+        ) : null}
+        <h2 className={`${titleClass} ${headingColor}`}>{title}</h2>
         {intro ? (
           <p
             className={`mt-5 text-pretty text-[1.02rem] leading-relaxed ${

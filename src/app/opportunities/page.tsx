@@ -54,6 +54,7 @@ export default function OpportunitiesPage() {
             <SectionHeading
               tone="light"
               eyebrow="The Process"
+              lead
               title="From interest to arrangement"
               intro="Participation occurs only under the applicable opportunity structure and agreement. Nothing is committed until that agreement is executed."
               align="center"
@@ -81,7 +82,7 @@ export default function OpportunitiesPage() {
         {/* Interest form */}
         <Section tone="white" id="interest">
           <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 xl:col-span-4">
               <SectionHeading
                 eyebrow="Register Your Interest"
                 title="Start a conversation"

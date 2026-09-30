@@ -50,7 +50,7 @@ export default async function ContactPage({
 
       <Section tone="white">
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 xl:col-span-4">
             <ContactDetails />
           </div>
           <div className="lg:col-span-7 xl:col-span-8">
@@ -66,6 +66,7 @@ export default async function ContactPage({
           <div className="lg:col-span-5">
             <SectionHeading
               eyebrow="FAQ"
+              rule
               title="Questions we are asked most"
               intro="If your question is not here, ask it directly — we would rather answer it than have you guess."
             />

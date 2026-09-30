@@ -28,6 +28,7 @@ export function HospitalityOverview() {
         <div className="lg:col-span-6">
           <SectionHeading
             eyebrow="Corporate Housing & Shortlet"
+            rule
             title={
               <>
                 A residence that works while
@@ -121,6 +122,7 @@ export function FeaturedApartments({ properties }: { properties: PropertyCardDat
       <Container>
         <SectionHeading
           eyebrow="Available Now"
+          display
           title="Featured residences"
           intro="Live availability from our inventory. Published nightly rates, serviced inclusions and a calendar that reflects confirmed bookings in real time."
           action={
@@ -283,6 +285,7 @@ export function HowItWorks() {
       <Container>
         <SectionHeading
           eyebrow="Two Journeys"
+          display
           title="How it works"
           intro="Two ways to work with us. Hospitality is our primary offering and stays visually dominant — but both run through the same team."
           align="center"
@@ -406,6 +409,7 @@ export function TrustSection() {
       <Container>
         <SectionHeading
           eyebrow="Trust & Transparency"
+          lead
           title="What we will never do"
           intro="The commitments below are structural, not aspirational. They are enforced in the product itself — copy rules, pricing logic, document handling and data access."
         />
@@ -493,6 +497,7 @@ export function ConciergeBenefits() {
         <div className="lg:col-span-5">
           <SectionHeading
             eyebrow="Concierge & Long Stays"
+            rule
             title="Settle in properly, not just check in"
             intro="The first night is easy. The value of a residence shows up in week two, when the working week is compressed and you need the place to run around you."
           />
