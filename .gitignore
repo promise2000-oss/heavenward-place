@@ -1,0 +1,33 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Runtime artefacts
+/tmp/
+/uploads/
+*.log
+npm-debug.log*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Playwright MCP output — never committed
+.playwright-mcp/
+.playwright/
+test-results/
+playwright-report/
