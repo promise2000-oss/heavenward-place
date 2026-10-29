@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { assertCopyAllowed, scanCopy, scanMarketingCopy } from '@/lib/copy-guard';
 import { opportunityCategories, opportunities, opportunityDisclaimer } from '@/data/opportunities';
+import { businessOpportunities } from '@/data/business-opportunities';
+import { ACKNOWLEDGEMENT_MESSAGE, NEXT_STEPS } from '@/data/enquiry';
 import { insightPosts } from '@/data/insights';
 import { legalPages } from '@/data/legal';
 
@@ -70,6 +72,22 @@ describe('copy guard — the whole seeded dataset is clean', () => {
     corpus.push([`opportunity:${opportunity.slug}:structure`, opportunity.structure]);
   }
 
+  for (const biz of businessOpportunities) {
+    corpus.push([`business:${biz.slug}`, biz.title]);
+    corpus.push([`business:${biz.slug}:summary`, biz.summary]);
+    corpus.push([`business:${biz.slug}:desc`, biz.description]);
+    corpus.push([`business:${biz.slug}:risk`, biz.riskNotice]);
+    corpus.push([`business:${biz.slug}:heavenward`, biz.heavenwardRole]);
+    corpus.push([`business:${biz.slug}:customer`, biz.customerRole]);
+    corpus.push([`business:${biz.slug}:associate`, biz.associateRole]);
+    corpus.push([`business:${biz.slug}:duration`, biz.durationLabel]);
+  }
+
+  corpus.push(['enquiry:acknowledgement', ACKNOWLEDGEMENT_MESSAGE]);
+  for (const step of NEXT_STEPS) {
+    corpus.push([`enquiry:next-step:${step.key}`, `${step.title} ${step.description} ${step.footnote}`]);
+  }
+
   for (const post of insightPosts) {
     corpus.push([`insight:${post.slug}`, post.title]);
     corpus.push([`insight:${post.slug}:excerpt`, post.excerpt]);
@@ -118,6 +136,30 @@ describe('copy guard — every opportunity carries risk language', () => {
   it('marks every opportunity as not publicly downloadable', () => {
     for (const opportunity of opportunities) {
       expect(opportunity.documentsPubliclyDownloadable).toBe(false);
+    }
+  });
+});
+
+describe('PRD — business opportunities carry defined roles', () => {
+  it('gives every business opportunity a defined role for Heavenward Place', () => {
+    for (const biz of businessOpportunities) {
+      expect(biz.heavenwardRole.length).toBeGreaterThan(20);
+      expect(biz.customerRole.length).toBeGreaterThan(20);
+      expect(biz.associateRole.length).toBeGreaterThan(20);
+    }
+  });
+
+  it('states a duration and a risk notice on every business opportunity', () => {
+    for (const biz of businessOpportunities) {
+      expect(biz.durationLabel.length).toBeGreaterThan(0);
+      expect(biz.riskNotice.length).toBeGreaterThan(60);
+    }
+  });
+
+  it('keeps the six investment categories investment-only', async () => {
+    const { opportunityCategories: cats } = await import('@/data/opportunities');
+    for (const category of cats) {
+      expect(category.kind).toBe('INVESTMENT');
     }
   });
 });

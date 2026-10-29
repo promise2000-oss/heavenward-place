@@ -25,15 +25,17 @@ function kindLabel(kind: 'BUSINESS' | 'INVESTMENT' | 'BOTH') {
   return kind === 'BOTH' ? 'Business & Investment' : kind === 'BUSINESS' ? 'Business' : 'Investment';
 }
 
-/** Category detail view. */
+/** Category detail view (investment journey). */
 export function OpportunityDetailCategoryView({
   category,
   opportunities,
   disclaimerVersion,
+  stayAreas = [],
 }: {
   category: OpportunityCategory;
   opportunities: OpportunityRow[];
   disclaimerVersion: number;
+  stayAreas?: string[];
 }) {
   const Icon = OPPORTUNITY_ICONS[category.icon];
   return (
@@ -53,6 +55,14 @@ export function OpportunityDetailCategoryView({
               <li>
                 <Link href="/opportunities" className="hover:text-[#FF9800]">
                   OPPORTUNITIES
+                </Link>
+              </li>
+              <li className="text-[#FF9800]" aria-hidden="true">
+                /
+              </li>
+              <li>
+                <Link href="/opportunities/investment" className="hover:text-[#FF9800]">
+                  INVESTMENT
                 </Link>
               </li>
               <li className="text-[#FF9800]" aria-hidden="true">
@@ -169,7 +179,9 @@ export function OpportunityDetailCategoryView({
           <div className="lg:col-span-7 xl:col-span-8">
             <InterestForm
               disclaimerVersion={disclaimerVersion}
+              journey="INVESTMENT"
               defaultArea={category.slug.toUpperCase().replace(/-/g, '_')}
+              stayAreas={stayAreas}
             />
           </div>
         </Container>
@@ -178,11 +190,12 @@ export function OpportunityDetailCategoryView({
   );
 }
 
-/** Individual opportunity detail view. */
+/** Individual opportunity detail view (investment journey). */
 export function OpportunityDetailOpportunityView({
   opportunity,
   related,
   disclaimerVersion,
+  stayAreas = [],
 }: {
   opportunity: OpportunityRow & {
     description: string;
@@ -191,6 +204,7 @@ export function OpportunityDetailOpportunityView({
   };
   related: Array<{ slug: string; title: string; summary: string; riskNotice: string }>;
   disclaimerVersion: number;
+  stayAreas?: string[];
 }) {
   return (
     <>
@@ -209,6 +223,14 @@ export function OpportunityDetailOpportunityView({
               <li>
                 <Link href="/opportunities" className="hover:text-[#FF9800]">
                   OPPORTUNITIES
+                </Link>
+              </li>
+              <li className="text-[#FF9800]" aria-hidden="true">
+                /
+              </li>
+              <li>
+                <Link href="/opportunities/investment" className="hover:text-[#FF9800]">
+                  INVESTMENT
                 </Link>
               </li>
               <li className="text-[#FF9800]" aria-hidden="true">
@@ -366,7 +388,9 @@ export function OpportunityDetailOpportunityView({
           <div className="lg:col-span-7 xl:col-span-8">
             <InterestForm
               disclaimerVersion={disclaimerVersion}
+              journey="INVESTMENT"
               defaultArea={opportunity.categorySlug.toUpperCase().replace(/-/g, '_')}
+              stayAreas={stayAreas}
             />
           </div>
         </Container>
@@ -468,6 +492,7 @@ export function OpportunityDetail(props: {
   };
   related?: Array<{ slug: string; title: string; summary: string; riskNotice: string }>;
   disclaimerVersion: number;
+  stayAreas?: string[];
 }) {
   if (props.kind === 'category' && props.category) {
     return (
@@ -475,6 +500,7 @@ export function OpportunityDetail(props: {
         category={props.category}
         opportunities={props.opportunities ?? []}
         disclaimerVersion={props.disclaimerVersion}
+        stayAreas={props.stayAreas ?? []}
       />
     );
   }
@@ -484,6 +510,7 @@ export function OpportunityDetail(props: {
         opportunity={props.opportunity}
         related={props.related ?? []}
         disclaimerVersion={props.disclaimerVersion}
+        stayAreas={props.stayAreas ?? []}
       />
     );
   }

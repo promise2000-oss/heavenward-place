@@ -4,6 +4,7 @@ import { listProperties } from '@/lib/catalog';
 import { legalPages } from '@/data/legal';
 import { insightPosts } from '@/data/insights';
 import { opportunityCategories, opportunities } from '@/data/opportunities';
+import { publishedBusinessOpportunities } from '@/data/business-opportunities';
 
 export const dynamic = 'force-static';
 
@@ -16,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/about', changeFrequency: 'monthly', priority: 0.7 },
     { url: '/concierge', changeFrequency: 'monthly', priority: 0.7 },
     { url: '/opportunities', changeFrequency: 'weekly', priority: 0.85 },
+    { url: '/opportunities/investment', changeFrequency: 'weekly', priority: 0.8 },
+    { url: '/opportunities/business', changeFrequency: 'weekly', priority: 0.8 },
     { url: '/insights', changeFrequency: 'weekly', priority: 0.75 },
     { url: '/contact', changeFrequency: 'monthly', priority: 0.7 },
   ];
@@ -39,6 +42,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'weekly' as const,
         priority: 0.65,
       })),
+    ...publishedBusinessOpportunities().map((o) => ({
+      url: `/opportunities/business/${o.slug}`,
+      changeFrequency: 'weekly' as const,
+      priority: 0.65,
+    })),
   ];
 
   const articleRoutes: MetadataRoute.Sitemap = insightPosts

@@ -129,6 +129,97 @@ export interface Opportunity {
   sortOrder: number;
 }
 
+/**
+ * The two customer journeys (PRD §2).
+ *
+ * Business Opportunities and Investment Opportunities are SEPARATE journeys.
+ * A customer exploring one never sees the other, and an enquiry opened from a
+ * journey inherits that journey's category automatically (PRD §3).
+ */
+export type OpportunityJourney = 'BUSINESS' | 'INVESTMENT';
+
+/**
+ * A Business Opportunity listing (PRD §1.2).
+ *
+ * Business Opportunities are a separate category from the six Investment
+ * categories. Listings are added and updated frequently as suitable openings
+ * arise. Every listing carries a DEFINED ROLE for Heavenward Place and explains
+ * the expected roles of the customer/client and Heavenward Place's business
+ * associates, who facilitate the business together. No listing may promise
+ * perpetual high profit or a guaranteed return.
+ */
+export interface BusinessOpportunity {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  description: string;
+  locationMarket: string;
+  /** Short-term or long-term — business opportunities may be either (PRD §1.2). */
+  durationLabel: string;
+  /** Heavenward Place's defined role. Mandatory on every listing (PRD §1.2, §9). */
+  heavenwardRole: string;
+  /** The expected role of the customer/client. */
+  customerRole: string;
+  /** The expected role of Heavenward Place's business associates. */
+  associateRole: string;
+  /** Mandatory key-consideration / risk notice. */
+  riskNotice: string;
+  /** DRAFT · PUBLISHED · PAUSED — admins add, update, pause or remove listings (PRD §9). */
+  status: 'DRAFT' | 'PUBLISHED' | 'PAUSED';
+  imageUrl: string;
+  sortOrder: number;
+}
+
+/**
+ * The enquiry statuses suggested by PRD §7.
+ *
+ * On a static site these are the labels staff apply to an enquiry in their own
+ * inbox or CRM; the customer never sees them. They are kept here so the whole
+ * lifecycle is documented in one place and the hand-off message can reference
+ * the starting status.
+ */
+export const ENQUIRY_STATUSES = [
+  'NEW_INTEREST_RECEIVED',
+  'ACKNOWLEDGEMENT_SENT',
+  'UNDER_REVIEW',
+  'AWAITING_NEXT_STEP_CHOICE',
+  'OFFICE_VISIT_DATE_REQUESTED',
+  'OFFICE_VISIT_TIME_PROPOSED',
+  'OFFICE_VISIT_CONFIRMED',
+  'APARTMENT_SEARCH_REQUESTED',
+  'APARTMENT_LINK_SENT',
+  'APARTMENT_BOOKED',
+  'FOLLOW_UP_REQUIRED',
+  'CLOSED',
+] as const;
+
+export type EnquiryStatus = (typeof ENQUIRY_STATUSES)[number];
+
+/** Human labels for each status, matching PRD §7. */
+export const ENQUIRY_STATUS_LABELS: Record<EnquiryStatus, string> = {
+  NEW_INTEREST_RECEIVED: 'New Interest Received',
+  ACKNOWLEDGEMENT_SENT: 'Acknowledgement Sent',
+  UNDER_REVIEW: 'Under Review',
+  AWAITING_NEXT_STEP_CHOICE: 'Awaiting Customer Next-Step Choice',
+  OFFICE_VISIT_DATE_REQUESTED: 'Office Visit — Date Requested',
+  OFFICE_VISIT_TIME_PROPOSED: 'Office Visit — Time Proposed',
+  OFFICE_VISIT_CONFIRMED: 'Office Visit — Confirmed',
+  APARTMENT_SEARCH_REQUESTED: 'Apartment Search Requested',
+  APARTMENT_LINK_SENT: 'Apartment Link Sent',
+  APARTMENT_BOOKED: 'Apartment Booked',
+  FOLLOW_UP_REQUIRED: 'Follow-up Required',
+  CLOSED: 'Closed',
+};
+
+/**
+ * The two next steps a customer chooses after submitting interest (PRD §5).
+ *
+ * Option A — visit the office (preferred date captured, never auto-confirmed).
+ * Option B — book an apartment near the preferred location.
+ */
+export type NextStepChoice = 'OFFICE_VISIT' | 'APARTMENT_BOOKING';
+
 export type InsightCategorySlug =
   | 'hospitality'
   | 'corporate-housing'

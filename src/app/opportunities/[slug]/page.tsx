@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/lib/seo';
 import { getCategory, getOpportunity, opportunitiesForCategory } from '@/data/opportunities';
-import { currentDisclaimer } from '@/lib/catalog';
+import { currentDisclaimer, areas } from '@/lib/catalog';
 import { DisclaimerGate } from '@/components/opportunities/DisclaimerGate';
 import { OpportunityDetail } from '@/components/opportunities/OpportunityDetail';
 
@@ -68,6 +68,7 @@ export default async function OpportunityPage({ params }: { params: Promise<Para
             imageUrl: o.imageUrl,
           }))}
           disclaimerVersion={disclaimer.version}
+          stayAreas={areas}
         />
       </DisclaimerGate>
     );
@@ -95,6 +96,7 @@ export default async function OpportunityPage({ params }: { params: Promise<Para
           .filter((o) => o.slug !== opportunity!.slug)
           .map((o) => ({ slug: o.slug, title: o.title, summary: o.summary, riskNotice: o.riskNotice }))}
         disclaimerVersion={disclaimer.version}
+        stayAreas={areas}
       />
     </DisclaimerGate>
   );

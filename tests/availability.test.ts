@@ -343,6 +343,7 @@ describe('no backend', () => {
       '/book/the-azure-residence-victoria-island', '/book/the-mariner-suite-ikoyi',
       '/book/the-meridian-penthouse-lekki', '/book/the-courtyard-studio-ikeja',
       '/book/the-orchard-residence-ikeja', '/book/the-palm-grove-villa-italoh',
+      '/opportunities/investment', '/opportunities/business',
       '/opportunities/agro-real-estate', '/opportunities/rental-income-property',
       '/opportunities/precious-metals', '/opportunities/precious-stones',
       '/opportunities/joint-venture', '/opportunities/distribution-income',

@@ -123,6 +123,9 @@ const PAGES = [
   '/stay/the-courtyard-studio-ikeja',
   '/concierge',
   '/opportunities',
+  '/opportunities/investment',
+  '/opportunities/business',
+  '/opportunities/business/hospitality-brand-operations-partnership',
   '/opportunities/agro-real-estate',
   '/opportunities/precious-metals',
   '/opportunities/joint-venture',
@@ -333,6 +336,38 @@ console.log('\n9. No prohibited financial claims');
   ok('required disclosure still present', /No returns are guaranteed/i.test(text));
   const { text: home } = await get('/');
   ok('no-custody disclosure site-wide', /does not take custody/i.test(home));
+}
+
+console.log('\n9b. Separate journeys and inherited enquiry categories (PRD §2, §3)');
+{
+  const { text: hub } = await get('/opportunities');
+  const { text: investment } = await get('/opportunities/investment');
+  const { text: business } = await get('/opportunities/business');
+
+  // The investment journey shows the six categories and no business listing.
+  for (const name of ['Agro Real Estate', 'Precious Metals', 'Joint Venture', 'Distribution Income']) {
+    ok(`investment journey shows "${name}"`, investment.includes(name));
+  }
+  ok('investment journey hides business listings',
+    !/Last-Mile Delivery Operation|Corporate Facilities Management/i.test(investment));
+
+  // The business journey shows business listings and none of the six categories.
+  ok('business journey shows a business listing', /Hospitality Brand|Last-Mile Delivery/i.test(business));
+  ok('business journey hides the investment categories',
+    !/Agro Real Estate Opportunities|Precious Stones Opportunities/i.test(business));
+
+  // Category inheritance: only the hub's general form asks the customer to choose.
+  ok('hub general form shows the journey selector', /INTEREST TYPE/i.test(visible(hub)));
+  ok('investment form inherits its category (no selector)', !/INTEREST TYPE/i.test(visible(investment)));
+  ok('business form inherits its category (no selector)', !/INTEREST TYPE/i.test(visible(business)));
+  ok('investment form is labelled an investment enquiry', /Investment opportunity interest/i.test(investment));
+  ok('business form is labelled a business enquiry', /Business opportunity interest/i.test(business));
+
+  // Every business listing states a defined role for Heavenward Place (PRD §1.2).
+  const { text: bizDetail } = await get('/opportunities/business/hospitality-brand-operations-partnership');
+  ok('business detail states Heavenward Place role', /HEAVENWARD PLACE/i.test(visible(bizDetail)));
+  ok('business detail states the customer role', /CUSTOMER|CLIENT/i.test(visible(bizDetail)));
+  ok('business detail carries a risk notice', /KEY CONSIDERATION|RISK NOTICE/i.test(visible(bizDetail)));
 }
 
 console.log('\n10. Brand, navigation and accessibility');

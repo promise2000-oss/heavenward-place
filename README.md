@@ -19,7 +19,9 @@ availability calendar and the search all run in the visitor's browser.
 | Public pages (all PRD routes) | Complete |
 | Brand system, tokens, logo assets, motion | Complete |
 | Client-side quote & availability | Complete |
-| Business & Investment section, disclaimer gate | Complete |
+| Business & Investment: two separate journeys, disclaimer gate | Complete |
+| Business Opportunity listings (roles, duration, risk; admin-editable seed data) | Complete |
+| Enquiry category inheritance, acknowledgement, Office Visit / Apartment next steps | Complete |
 | Booking request flow (dates → details → hand-off) | Complete |
 | Contact, concierge, interest, assisted search | Complete — all hand off to the guest |
 | SEO: static metadata, sitemap, robots, JSON-LD, OG image | Complete |
@@ -210,6 +212,26 @@ must exist on disk.
 
 ## Business rules encoded
 
+- **Two separate journeys** → Business Opportunities and Investment Opportunities
+  live at `/opportunities/business` and `/opportunities/investment`. A customer
+  exploring one never sees the other. The hub at `/opportunities` is the only
+  place both are shown, and the only place an enquiry form asks the customer to
+  choose between them.
+- **The six categories are investment-only** → agro real estate, rental income
+  property, precious metals, precious stones, joint ventures and distribution
+  income sit under the Investment journey. Business Opportunities are a separate,
+  frequently-updated collection (`src/data/business-opportunities.ts`) where each
+  listing carries a **defined role** for Heavenward Place, the customer/client
+  and Heavenward Place's business associates — and never promises perpetual high
+  profit or a guaranteed return.
+- **Enquiry inherits its category** → an enquiry opened from a journey is
+  classified automatically and does not ask the customer to choose again; the
+  category travels inside the hand-off message.
+- **Next-step choice** → after submitting interest the customer receives the
+  acknowledgement, then chooses an **Office Visit** (preferred date captured as a
+  request, never auto-confirmed) or an **Apartment Booking** (directed to `/stay`
+  filtered by their preferred area, plus a free-text request that reaches the
+  team for follow-up if nothing suitable is available).
 - **7+ nights** → complimentary airport / preferred-location pickup **and** 3
   private-chef meals per week, max 1 per day. Applied in the quote, shown
   before the request, and always stating the cap. Chef meals beyond the

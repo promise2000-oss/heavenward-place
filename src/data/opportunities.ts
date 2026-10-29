@@ -1,12 +1,20 @@
 import type { Disclaimer, Opportunity, OpportunityCategory } from './types';
 
 /**
- * The six Business & Investment opportunity categories.
+ * The six INVESTMENT opportunity categories (PRD §1.1).
+ *
+ * These six categories are investment opportunities ONLY, not business
+ * opportunities. Business Opportunities live in their own separate journey and
+ * data file (`business-opportunities.ts`), and a customer exploring one journey
+ * never sees the other (PRD §2).
  *
  * PRESENTATION RULES (enforced across the product):
  *  • Every category and opportunity carries a key-consideration / risk notice.
  *  • No guaranteed-return, risk-free or guaranteed-margin language anywhere.
  *  • Investment documents are never publicly downloadable.
+ *  • For an investment opportunity, each listing explains the roles of
+ *    Heavenward Place and the customer, the applicable terms, the risks and any
+ *    expected time horizon before the customer decides to proceed (PRD §1.1).
  *  • The exact disclaimer wording is admin-editable and pending Nigerian
  *    legal/compliance counsel review.
  */
@@ -26,7 +34,7 @@ export const opportunityCategories: OpportunityCategory[] = [
     description:
       'Agro real estate covers agricultural land, produce-processing facilities and storage assets positioned along identified food-production corridors. Presented opportunities typically involve land title documentation, produce offtake arrangements and a defined operating partner.\n\nHeavenward Place presents these opportunities at a high level only. Site inspections, title verification, agronomic assessment and full commercial documentation are handled privately through a follow-up process with the operating partner.',
     riskNotice: STANDARD_RISK,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     imageUrl:
       'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
     isActive: true,
@@ -90,7 +98,7 @@ export const opportunityCategories: OpportunityCategory[] = [
     description:
       'Joint venture opportunities bring a contributing party and an operating party together under a defined structure — capital, assets, distribution reach or operational capability on one side; a proven team, market access or management on the other.\n\nGovernance, decision rights, reporting obligations and exit provisions are negotiated in the definitive agreement. Nothing is committed until that agreement is executed by all parties.',
     riskNotice: `${STANDARD_RISK} Joint-venture outcomes depend on the other party, the governance arrangement and the terms of the definitive agreement.`,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     imageUrl:
       'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80',
     isActive: true,
@@ -106,7 +114,7 @@ export const opportunityCategories: OpportunityCategory[] = [
     description:
       'Distribution income opportunities sit within an established value chain — consumer goods, FMCG, agricultural produce, pharmaceuticals and industrial supplies — where a defined territory or channel produces revenue from volume moved through the network.\n\nTerritory definitions, channel agreements and stock movement are reviewed during the follow-up process. Volume-dependent income carries execution risk.',
     riskNotice: `${STANDARD_RISK} Distribution income depends on volume, territory performance and channel agreements, none of which are within your control.`,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     imageUrl:
       'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
     isActive: true,
@@ -130,7 +138,7 @@ export const opportunities: Opportunity[] = [
     capitalRangeMin: 25_000_000_00,
     capitalRangeMax: 250_000_000_00,
     riskNotice: STANDARD_RISK,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     status: 'PUBLISHED',
     documentsPubliclyDownloadable: false,
     imageUrl:
@@ -152,7 +160,7 @@ export const opportunities: Opportunity[] = [
     capitalRangeMin: 10_000_000_00,
     capitalRangeMax: 100_000_000_00,
     riskNotice: STANDARD_RISK,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     status: 'PUBLISHED',
     documentsPubliclyDownloadable: false,
     imageUrl:
@@ -262,34 +270,12 @@ export const opportunities: Opportunity[] = [
     capitalRangeMin: 25_000_000_00,
     capitalRangeMax: 300_000_000_00,
     riskNotice: STANDARD_RISK,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     status: 'PUBLISHED',
     documentsPubliclyDownloadable: false,
     imageUrl:
       'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1200&q=80',
     sortOrder: 1,
-  },
-  {
-    id: 'opp_jv_2',
-    categorySlug: 'joint-venture',
-    slug: 'hospitality-brand-operations-jv',
-    title: 'Hospitality Brand & Operations Joint Venture',
-    summary:
-      'A brand-and-operations partnership bringing an established hospitality standard into a new market.',
-    description:
-      'A partnership model in which an operator brings brand standards, systems and distribution while a local partner brings market access, premises and local operations. It suits parties who have assets or capital but not a hospitality operating system.',
-    locationMarket: 'Nigeria, with expansion markets under discussion',
-    structure: 'Negotiated joint-venture entity. Terms set privately during consultation.',
-    capitalRangeLabel: 'Indicative range from ₦50,000,000',
-    capitalRangeMin: 50_000_000_00,
-    capitalRangeMax: 500_000_000_00,
-    riskNotice: STANDARD_RISK,
-    kind: 'BUSINESS',
-    status: 'PUBLISHED',
-    documentsPubliclyDownloadable: false,
-    imageUrl:
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
-    sortOrder: 2,
   },
   {
     id: 'opp_dist_1',
@@ -306,34 +292,12 @@ export const opportunities: Opportunity[] = [
     capitalRangeMin: 5_000_000_00,
     capitalRangeMax: 80_000_000_00,
     riskNotice: STANDARD_RISK,
-    kind: 'BOTH',
+    kind: 'INVESTMENT',
     status: 'PUBLISHED',
     documentsPubliclyDownloadable: false,
     imageUrl:
       'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1200&q=80',
     sortOrder: 1,
-  },
-  {
-    id: 'opp_dist_2',
-    categorySlug: 'distribution-income',
-    slug: 'agricultural-produce-offtake',
-    title: 'Agricultural Produce Offtake & Channel',
-    summary:
-      'A produce offtake and channel arrangement connecting production volumes with a downstream buyer network.',
-    description:
-      'A produce offtake and channel arrangement connecting production volumes with a downstream buyer network. It suits parties with logistics reach or aggregation capability rather than working capital alone.',
-    locationMarket: 'Nigeria',
-    structure: 'Offtake or channel agreement. Terms set privately.',
-    capitalRangeLabel: 'Indicative range from ₦10,000,000',
-    capitalRangeMin: 10_000_000_00,
-    capitalRangeMax: 120_000_000_00,
-    riskNotice: STANDARD_RISK,
-    kind: 'BUSINESS',
-    status: 'PUBLISHED',
-    documentsPubliclyDownloadable: false,
-    imageUrl:
-      'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80',
-    sortOrder: 2,
   },
 ];
 
